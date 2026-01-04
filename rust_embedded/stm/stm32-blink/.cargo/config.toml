@@ -1,0 +1,9 @@
+[target.thumbv7m-none-eabi]
+# 使用 probe-rs 自动烧录运行，芯片设为 STM32F103C8
+runner = "probe-rs run --chip STM32F103C8"
+
+[build]
+target = "thumbv7m-none-eabi" # 指定架构
+
+[env]
+DEFMT_LOG = "info"

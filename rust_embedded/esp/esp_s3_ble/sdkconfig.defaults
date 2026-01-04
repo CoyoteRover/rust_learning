@@ -1,0 +1,35 @@
+# === 1. 硬件内存配置 (针对 N16R8) ===
+# 开启 PSRAM (OPI 模式，8MB)
+CONFIG_ESP32S3_SPIRAM_SUPPORT=y
+CONFIG_SPIRAM_MODE_OCT=y
+CONFIG_SPIRAM_SPEED_80M=y
+# 允许 .bss 段放入 PSRAM (可选，大项目很有用)
+CONFIG_SPIRAM_ALLOW_BSS_SEG_EXTERNAL_MEMORY=y
+
+# Flash 大小设置为 16MB
+CONFIG_ESPTOOLPY_FLASHSIZE_16MB=y
+CONFIG_ESPTOOLPY_FLASHSIZE="16MB"
+
+# === 2. 蓝牙协议栈配置 (使用 NimBLE) ===
+CONFIG_BT_ENABLED=y
+CONFIG_BT_BLE_ENABLED=y
+CONFIG_BT_BLUEDROID_ENABLED=n
+CONFIG_BT_NIMBLE_ENABLED=y
+
+# === 3. 杂项优化 ===
+# 增大主栈，防止 Rust 调试模式爆栈
+CONFIG_ESP_MAIN_TASK_STACK_SIZE=20000
+# 开启看门狗延时，防止启动过慢被复位
+CONFIG_ESP_INT_WDT_TIMEOUT_MS=800
+CONFIG_ESP_TASK_WDT_TIMEOUT_S=10
+
+# === 1. 屏蔽 Second Stage Bootloader 日志 ===
+# 将 Bootloader 的日志级别设为 "None" (静音)
+CONFIG_BOOTLOADER_LOG_LEVEL_NONE=y
+# 或者使用数字 0 (与上面等效，视 IDF 版本而定，两个都写也没事)
+CONFIG_BOOTLOADER_LOG_LEVEL=0
+
+# === 2. (可选) 屏蔽 ESP-IDF 系统启动日志 ===
+# 如果你连 Wi-Fi 启动、蓝牙初始化的日志也不想看，只看自己 println 的
+# 可以把默认日志级别调高到 Error 或 Warn
+CONFIG_LOG_DEFAULT_LEVEL_ERROR=y
