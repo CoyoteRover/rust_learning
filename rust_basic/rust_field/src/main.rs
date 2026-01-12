@@ -1,4 +1,4 @@
-//rust作用域
+//rust所有权基础与作用域
 
 fn main() {
     {
@@ -19,4 +19,27 @@ fn main() {
     //println!("{}", s3);
     //报错！s3已无效！报错：borrow of moved value: 's3' value borrowed here after move
     println!("{}", s4); //正确
+
+    //外层作用域
+    let outer = "outer";
+    println!("外层:{}", outer);
+
+    {
+        //内层作用域
+        let inner = "inner";
+        println!("内层:{}", inner);
+        println!("外层（在内层调用）:{}", outer); //内层可以访问外层变量
+    } //inner在这里失效
+
+    //println!("{}",inner);//在这里会报错，已离开inner作用域
+    println!("外层（在外层中）:{}", outer);
+
+    //变量遮蔽
+    let x = 5;
+    let x = x + 1;//遮蔽之前的x
+    {
+        let x = x * 2; //遮蔽外层的x
+        println!("内层x:{}", x);
+    }
+    println!("外层x:{}", x);
 }
